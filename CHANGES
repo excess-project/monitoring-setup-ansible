@@ -1,0 +1,10 @@
+# RELEASE NOTES
+
+## 16.2 (27/04/2016)
+
+### Features
+- Vagrant deployment with 3 VMs (1 master, 2 slaves)
+- Ansible playbooks to setup a monitoring master and slaves
+
+### Known Issues
+- Compilation issues with PAPI-C need to be resolved.
