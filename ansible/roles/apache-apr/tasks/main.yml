@@ -1,0 +1,12 @@
+- name: Download Apache APR
+  get_url: url={{ APR_URL }} dest="{{ ROOT }}/{{ APR }}-{{ APR_VERSION }}.tar.gz" validate_certs=no timeout=30
+
+- name: Unarchive Apache APR
+  unarchive: src="{{ ROOT }}/{{ APR }}-{{ APR_VERSION }}.tar.gz" dest={{ ROOT }} copy=no
+
+- name: Build Apache APR
+  shell: 'cd {{ COMPILE_PATH_APR }};{{ item }}'
+  with_items:
+    - './configure --prefix={{ INSTALL_PATH_APR }}'
+    - make
+    - make install all

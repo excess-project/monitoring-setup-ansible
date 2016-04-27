@@ -1,0 +1,21 @@
+- name: Collect archives to be deleted
+  shell: 'ls {{ ROOT }}/*.tar.gz'
+  register: archives_to_be_removed
+  ignore_errors: yes
+
+- name: Clean up archives
+  file: path={{ item }} state=absent
+  with_items:
+    - "{{ archives_to_be_removed.stdout_lines }}"
+
+- name: Clean up dependencies
+  file: path={{ item }} state=absent
+  with_items:
+    - "{{ COMPILE_PATH_SENSORS }}"
+    - "{{ COMPILE_PATH_FLEX }}"
+    - "{{ COMPILE_PATH_BISON }}"
+    - "{{ COMPILE_PATH_APRUTIL }}"
+    - "{{ COMPILE_PATH_APR }}"
+    - "{{ COMPILE_PATH_CURL }}"
+    - "{{ COMPILE_PATH_PAPI }}"
+    - "{{ ROOT }}/{{ NVIDIA }}_{{ NVIDIA_VERSION }}.run"

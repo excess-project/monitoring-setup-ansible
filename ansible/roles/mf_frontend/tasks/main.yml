@@ -1,0 +1,19 @@
+- name: Checkout monitoring frontend
+  git:
+    repo=https://github.com/excess-project/monitoring-frontend.git
+    dest=/home/{{ user }}/monitoring-www
+    force=yes
+    version=master
+  become: no
+
+- name: Install monitoring frontend
+  npm: path=/home/{{ user }}/monitoring-www
+
+- name: Start the monitoring frontend using forever
+  command: forever start /home/{{ user }}/monitoring-www/bin/www
+  when: "forever_list.stdout.find('/home/{{ user }}/monitoring-www/bin/www') == -1"
+
+- name: Wait for the monitoring frontend to start
+  wait_for:
+    port=3000
+    delay=5

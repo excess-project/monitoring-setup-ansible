@@ -1,0 +1,19 @@
+- name: Download PAPI
+  get_url:
+    url={{ PAPI_URL }}
+    dest="{{ ROOT }}/{{ PAPI }}-{{ PAPI_VERSION }}.tar.gz"
+    validate_certs=no
+    timeout=30
+
+- name: Unarchive PAPI
+  unarchive:
+    src="{{ ROOT }}/{{ PAPI }}-{{ PAPI_VERSION }}.tar.gz"
+    dest="{{ ROOT }}"
+    copy=no
+
+- name: Build PAPI
+  shell: 'cd {{ COMPILE_PATH_PAPI }}/src;{{ item }}'
+  with_items:
+    - './configure --prefix={{ INSTALL_PATH_PAPI }} --with-components="rapl coretemp infiniband"'
+    - make -i all
+    - make install

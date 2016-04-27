@@ -1,0 +1,4 @@
+NVIDIA: gdk_linux_amd64
+NVIDIA_VERSION: 352_55_release
+NVIDIA_URL: "http://developer.download.nvidia.com/compute/cuda/7.5/Prod/gdk/{{ NVIDIA }}_{{ NVIDIA_VERSION }}.run"
+INSTALL_PATH_NVIDIA: "{{ INSTALL_PATH }}/nvidia"

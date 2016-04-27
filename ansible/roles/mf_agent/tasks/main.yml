@@ -1,0 +1,6 @@
+- name: Clones the monitoring-agent repository
+  git:
+    repo=https://github.com/excess-project/monitoring-agent.git
+    dest={{ ROOT }}
+    force=yes
+    version=master

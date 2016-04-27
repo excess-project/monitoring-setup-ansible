@@ -1,0 +1,9 @@
+---
+- name: Set up the monitoring-server and monitoring-frontend
+  hosts: master
+  roles:
+    - common
+    - elasticsearch
+    - nodejs
+    - mf_server
+    - mf_frontend

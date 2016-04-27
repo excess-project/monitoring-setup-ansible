@@ -1,0 +1,40 @@
+- name: Installs required dependencies for Elasticsearch
+  apt:
+    pkg=default-jre
+    state=present
+    update_cache=yes
+    force=yes
+  become: yes
+
+- name: Add public signing key for Elasticsearch
+  apt_key:
+    url=https://packages.elastic.co/GPG-KEY-elasticsearch
+    state=present
+    validate_certs=no
+  become: yes
+
+- name: Add repository to install Elasticsearch
+  apt_repository:
+    repo='deb http://packages.elastic.co/elasticsearch/2.x/debian stable main'
+    state=present
+  become: yes
+
+- name: Install Elasticsearch through the newly added repository
+  apt:
+    pkg=elasticsearch
+    state=installed
+    update_cache=yes
+  become: yes
+
+- name: Start Elasticsearch service
+  service:
+    name=elasticsearch
+    state=started
+    enabled=yes
+  become: yes
+
+- name: Check that Elasticsearch is reachable
+  wait_for:
+    host=localhost
+    port=9200
+    timeout=30

@@ -1,0 +1,2 @@
+- name: Start the monitoring agent
+  shell: '{{ ROOT }}/dist/start.sh'

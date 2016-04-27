@@ -1,0 +1,5 @@
+APRUTIL: apr-util
+APRUTIL_VERSION: 1.5.4
+APRUTIL_URL: "http://www.eu.apache.org/dist/apr/{{ APRUTIL }}-{{ APRUTIL_VERSION }}.tar.gz"
+INSTALL_PATH_APRUTIL: "{{ INSTALL_PATH_APR }}"
+COMPILE_PATH_APRUTIL: "{{ ROOT }}/{{ APRUTIL }}-{{ APRUTIL_VERSION}}"

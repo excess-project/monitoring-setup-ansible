@@ -1,0 +1,5 @@
+CURL: curl
+CURL_VERSION: 7.36.0
+CURL_URL: "http://curl.haxx.se/download/{{ CURL }}-{{ CURL_VERSION }}.tar.gz"
+INSTALL_PATH_CURL: "{{ INSTALL_PATH }}/{{ CURL }}"
+COMPILE_PATH_CURL: "{{ ROOT }}/{{ CURL }}-{{ CURL_VERSION }}"

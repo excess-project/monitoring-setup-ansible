@@ -1,0 +1,5 @@
+- name: Build monitoring agent
+  shell: 'cd {{ ROOT }};{{ item }}'
+  with_items:
+    - make
+    - make install

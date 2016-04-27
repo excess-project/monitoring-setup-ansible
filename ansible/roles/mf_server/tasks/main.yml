@@ -1,0 +1,26 @@
+- name: Clones the monitoring-server repository
+  git:
+    repo=https://github.com/excess-project/monitoring-server.git
+    dest=/home/{{ user }}/monitoring-server
+    force=yes
+    version=master
+  become: no
+
+- name: Install monitoring server
+  npm: path=/home/{{ user }}/monitoring-server
+  # issue with jade dependencies -> renaming to pug failed
+  ignore_errors: yes
+
+- name: "Check list of Node.js apps running."
+  command: forever list
+  register: forever_list
+  changed_when: false
+
+- name: Start the monitoring server using forever
+  command: forever start /home/{{ user }}/monitoring-server/bin/www
+  when: "forever_list.stdout.find('/home/{{ user }}/monitoring-server/bin/www') == -1"
+
+- name: Wait for the monitoring server to start
+  wait_for:
+    port=3030
+    delay=5

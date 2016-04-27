@@ -1,0 +1,40 @@
+- name: Download Flex
+  get_url: url={{ FLEX_URL }} dest="{{ ROOT }}/{{ FLEX }}-{{ FLEX_VERSION }}.tar.gz" validate_certs=no timeout=30
+
+- name: Unarchive Flex
+  unarchive: src="{{ ROOT }}/{{ FLEX }}-{{ FLEX_VERSION }}.tar.gz" dest={{ ROOT }} copy=no
+
+- name: Build Flex
+  shell: 'cd {{ COMPILE_PATH_FLEX }};{{ item }}'
+  with_items:
+    - './configure --prefix={{ INSTALL_PATH_FLEX }}'
+    - make
+    - make install
+
+- name: Download Bison
+  get_url: url={{ BISON_URL }} dest="{{ ROOT }}/{{ BISON }}-{{ BISON_VERSION }}.tar.gz" validate_certs=no timeout=30
+
+- name: Unarchive Bison
+  unarchive: src="{{ ROOT }}/{{ BISON }}-{{ BISON_VERSION }}.tar.gz" dest={{ ROOT }} copy=no
+
+- name: Build Bison
+  shell: 'cd {{ COMPILE_PATH_BISON }};{{ item }}'
+  with_items:
+    - './configure --prefix={{ INSTALL_PATH_BISON }}'
+    - make
+    - make install
+
+- name: Download lm_sensors
+  get_url: url={{ SENSORS_URL }} dest="{{ ROOT }}/{{ SENSORS }}-{{ SENSORS_VERSION }}.tar.gz" validate_certs=no timeout=30
+
+- name: Unarchive lm_sensors
+  unarchive: src="{{ ROOT }}/{{ SENSORS }}-{{ SENSORS_VERSION }}.tar.gz" dest={{ ROOT }} copy=no
+
+- name: Build lm_sensors
+  shell: 'cd {{ COMPILE_PATH_SENSORS }};{{ item }}'
+  environment:
+    LD_LIBRARY_PATH: "{{ INSTALL_PATH_FLEX }}/lib:{{ INSTALL_PATH_BISON }}/lib"
+    PATH: "{{ ansible_env.PATH }}:{{ INSTALL_PATH_BISON }}/bin:{{ INSTALL_PATH_FLEX }}/bin"
+  with_items:
+    - 'make -i PREFIX={{ INSTALL_PATH_SENSORS }} all'
+    - 'make -i PREFIX={{ INSTALL_PATH_SENSORS }} install'

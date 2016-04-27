@@ -1,0 +1,17 @@
+FLEX: flex
+FLEX_VERSION: 2.5.33
+FLEX_URL: "http://prdownloads.sourceforge.net/flex/{{ FLEX }}-{{ FLEX_VERSION }}.tar.gz"
+INSTALL_PATH_FLEX: "{{ INSTALL_PATH }}/{{ FLEX }}"
+COMPILE_PATH_FLEX: "{{ ROOT }}/{{ FLEX }}-{{ FLEX_VERSION}}"
+
+BISON: bison
+BISON_VERSION: 2.3
+BISON_URL: "http://ftp.gnu.org/gnu/bison/{{ BISON }}-{{ BISON_VERSION }}.tar.gz"
+INSTALL_PATH_BISON: "{{ INSTALL_PATH }}/{{ BISON }}"
+COMPILE_PATH_BISON: "{{ ROOT }}/{{ BISON }}-{{ BISON_VERSION}}"
+
+SENSORS: lm_sensors
+SENSORS_VERSION: 3.4.0
+SENSORS_URL: "https://fossies.org/linux/misc/{{ SENSORS }}-{{ SENSORS_VERSION }}.tar.gz"
+INSTALL_PATH_SENSORS: "{{ INSTALL_PATH }}/sensors"
+COMPILE_PATH_SENSORS: "{{ ROOT }}/{{ SENSORS }}-{{ SENSORS_VERSION }}"

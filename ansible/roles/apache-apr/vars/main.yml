@@ -1,0 +1,5 @@
+APR: apr
+APR_VERSION: 1.5.2
+APR_URL: "http://www.eu.apache.org/dist/apr/{{ APR }}-{{ APR_VERSION }}.tar.gz"
+INSTALL_PATH_APR: "{{ INSTALL_PATH }}/{{ APR }}"
+COMPILE_PATH_APR: "{{ ROOT }}/{{ APR }}-{{ APR_VERSION}}"

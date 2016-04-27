@@ -1,0 +1,9 @@
+- name: Download NVIDIA GDK
+  get_url: url={{ NVIDIA_URL }} dest="{{ ROOT }}/{{ NVIDIA }}_{{ NVIDIA_VERSION }}.run" validate_certs=no timeout=30
+
+- name: Build NVIDIA GDK
+  shell: 'cd {{ ROOT }};{{ item }}'
+  with_items:
+    - 'chmod +x {{ NVIDIA }}_{{ NVIDIA_VERSION }}.run'
+    - './{{ NVIDIA }}_{{ NVIDIA_VERSION }}.run --silent --installdir={{ INSTALL_PATH_NVIDIA }}'
+  ignore_errors: yes

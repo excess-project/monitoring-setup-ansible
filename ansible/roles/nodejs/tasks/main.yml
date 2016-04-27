@@ -1,0 +1,20 @@
+- name: Add NodeSource repository for NodeJS 4.x
+  apt_repository:
+    repo='deb https://deb.nodesource.com/node_4.x {{ ansible_distribution_release|lower }} main'
+    state=present
+  become: yes
+
+- name: Install latest NodeJS version
+  apt:
+    pkg=nodejs
+    state=latest
+    update_cache=yes
+    force=yes
+  become: yes
+
+- name: Install forever to run NodeJS apps
+  npm:
+    name=forever
+    global=yes
+    state=present
+  become: yes

@@ -1,0 +1,16 @@
+---
+- name: Set up the monitoring-agent
+  hosts: worker
+  roles:
+    - common
+    - build-essentials
+    - mf_agent
+    - papi
+    - curl
+    - apache-apr
+    - apache-apr-util
+    - nvidia-gdk
+    - lm-sensors
+    - mf_agent-build
+    - clean-up
+    - mf_agent-start

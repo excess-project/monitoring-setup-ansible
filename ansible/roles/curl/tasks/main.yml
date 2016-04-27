@@ -1,0 +1,12 @@
+- name: Download CURL
+  get_url: url={{ CURL_URL }} dest="{{ ROOT }}/{{ CURL }}-{{ CURL_VERSION }}.tar.gz" validate_certs=no timeout=30
+
+- name: Unarchive CURL
+  unarchive: src="{{ ROOT }}/{{ CURL }}-{{ CURL_VERSION }}.tar.gz" dest={{ ROOT }} copy=no
+
+- name: Build curl
+  shell: 'cd {{ COMPILE_PATH_CURL }};{{ item }}'
+  with_items:
+    - './configure --prefix={{ INSTALL_PATH_CURL }}'
+    - make all
+    - make install

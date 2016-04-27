@@ -1,0 +1,12 @@
+- name: Download Apache APR Util
+  get_url: url={{ APRUTIL_URL }} dest="{{ ROOT }}/{{ APRUTIL }}-{{ APRUTIL_VERSION }}.tar.gz" validate_certs=no timeout=30
+
+- name: Unarchive Apache APR Util
+  unarchive: src="{{ ROOT }}/{{ APRUTIL }}-{{ APRUTIL_VERSION }}.tar.gz" dest={{ ROOT }} copy=no
+
+- name: Build Apache APR Util
+  shell: 'cd {{ COMPILE_PATH_APRUTIL }};{{ item }}'
+  with_items:
+    - './configure --prefix={{ INSTALL_PATH_APRUTIL }} --with-apr={{ INSTALL_PATH_APR }}'
+    - make all
+    - make install

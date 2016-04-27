@@ -1,0 +1,11 @@
+- name: Installs required dependencies
+  apt:
+    pkg={{ item }}
+    state=present
+    update_cache=yes
+    force=yes
+  with_items:
+    - build-essential
+    - gfortran
+    - m4
+  become: yes
