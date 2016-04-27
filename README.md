@@ -120,3 +120,7 @@ Please [create](https://github.com/excess-project/monitoring-setup-ansible/websi
 | Date        | Version | Comment                                    |
 | ----------- | ------- | ------------------------------------------ |
 | 2016-04-27  | 16.2    | Public release compatible with ATOM v16.2  |
+
+
+[excess]: http://www.excess-project.eu
+[dreamcloud]: http://www.dreamcloud-project.eu
