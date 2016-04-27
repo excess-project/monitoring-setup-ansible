@@ -46,8 +46,20 @@ http://192.168.33.10:3030
 
 If you intend to change available metrics, please have a look at the **config** folder. You'll find there the **mf_config.ini** file, where you can enable/disable plugins and metrics individually. Please note that most plugins are not coming with VM support, and thus won't work. That's why we use the memory plugin for demonstration purposes.
 
+Of course, you can also just setup a master node
 
-## Setup a master node
+```bash
+vagrant up node1
+```
+
+or a single slave node via
+
+```bash
+vagrant up node2
+```
+
+
+## Setup a master node via Ansible
 
 Aside from Vagrant, you can use the Ansible playbooks directly. In order to setup a master node with the monitoring-server,
 monitoring-frontend, and Elasticsearch, please execute the following commands:
@@ -84,7 +96,7 @@ chmod og-wx ~/.ssh/authorized_keys
 ```
 
 
-## Setup a monitoring node
+## Setup a monitoring node via Ansible
 
 In order to setup a monitoring node, on which the monitoring agent should run, please follow the next steps.
 
