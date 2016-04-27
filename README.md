@@ -65,12 +65,12 @@ can look as follows:
 [master]
 192.168.0.21
 
-[workers]
+[worker]
 192.168.0.22
 192.168.0.23
 ```
 
-Here, we have defined two groups (master and workers), and assigned a list of nodes to them.
+Here, we have defined two groups (master and worker), and assigned a list of nodes to them.
 
 With **-u**, we set the installation user. For Vagrant VMs, the user equals **vagrant**. Finally, we can specify
 the playbook for the monitoring server, namely **ansible/monitoring-server.yml**. Please ensure that you can access
