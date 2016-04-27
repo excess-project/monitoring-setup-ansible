@@ -55,7 +55,7 @@ monitoring-frontend, and Elasticsearch, please execute the following commands:
 ```bash
 git clone https://github.com/excess-project/monitoring-setup-ansible.git
 cd monitoring-setup-ansible
-ansible-playbook -i hostfile -u $USER ansible/monitoring-server.yml
+ansible-playbook -i hostfile --extra-vars "user=$USER" ansible/monitoring-server.yml
 ```
 
 With **-i**, you can specify the host that should be configured as the monitoring master node. An example **hostfile**
@@ -91,7 +91,7 @@ In order to setup a monitoring node, on which the monitoring agent should run, p
 ```bash
 git clone https://github.com/excess-project/monitoring-setup-ansible.git
 cd monitoring-setup-ansible
-ansible-playbook -i hostfile -u $USER ansible/monitoring-agent.yml
+ansible-playbook -i hostfile --extra-vars "user=$USER" ansible/monitoring-agent.yml
 ```
 
 Please have a look at the previous section with respect to the arguments provided for **ansible-playbook**.
