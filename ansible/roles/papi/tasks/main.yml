@@ -1,19 +1,30 @@
+- name: Check if PAPI binaries are already installed
+  stat: path={{ ROOT }}/bin/papi/bin/papi_avail
+  register: check_papi_path
+
+- name: Is PAPI already installed?
+  debug: msg="Yes, it is! PAPI installation will be skipped this time."
+  when: check_papi_path.stat.exists == true
+
 - name: Download PAPI
   get_url:
     url={{ PAPI_URL }}
     dest="{{ ROOT }}/{{ PAPI }}-{{ PAPI_VERSION }}.tar.gz"
     validate_certs=no
     timeout=30
+  when: check_papi_path.stat.exists == false
 
 - name: Unarchive PAPI
   unarchive:
     src="{{ ROOT }}/{{ PAPI }}-{{ PAPI_VERSION }}.tar.gz"
     dest="{{ ROOT }}"
     copy=no
+  when: check_papi_path.stat.exists == false
 
 - name: Build PAPI
   shell: 'cd {{ COMPILE_PATH_PAPI }}/src;{{ item }}'
   with_items:
     - './configure --prefix={{ INSTALL_PATH_PAPI }} --with-components="rapl coretemp infiniband"'
-    - make -i all
+    - make
     - make install
+  when: check_papi_path.stat.exists == false

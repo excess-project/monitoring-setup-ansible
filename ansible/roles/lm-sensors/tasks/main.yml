@@ -1,8 +1,18 @@
+- name: Check if flex is already installed
+  stat: path={{ ROOT }}/bin/flex/bin/flex
+  register: check_flex_path
+
+- name: Is flex already installed?
+  debug: msg="Yes, it is! Flex installation will be skipped this time."
+  when: check_flex_path.stat.exists == true
+
 - name: Download Flex
   get_url: url={{ FLEX_URL }} dest="{{ ROOT }}/{{ FLEX }}-{{ FLEX_VERSION }}.tar.gz" validate_certs=no timeout=30
+  when: check_flex_path.stat.exists == false
 
 - name: Unarchive Flex
   unarchive: src="{{ ROOT }}/{{ FLEX }}-{{ FLEX_VERSION }}.tar.gz" dest={{ ROOT }} copy=no
+  when: check_flex_path.stat.exists == false
 
 - name: Build Flex
   shell: 'cd {{ COMPILE_PATH_FLEX }};{{ item }}'
@@ -10,12 +20,23 @@
     - './configure --prefix={{ INSTALL_PATH_FLEX }}'
     - make
     - make install
+  when: check_flex_path.stat.exists == false
+
+- name: Check if bison is already installed
+  stat: path={{ ROOT }}/bin/bison/bin/bison
+  register: check_bison_path
+
+- name: Is bison already installed?
+  debug: msg="Yes, it is! Bison installation will be skipped this time."
+  when: check_bison_path.stat.exists == true
 
 - name: Download Bison
   get_url: url={{ BISON_URL }} dest="{{ ROOT }}/{{ BISON }}-{{ BISON_VERSION }}.tar.gz" validate_certs=no timeout=30
+  when: check_bison_path.stat.exists == false
 
 - name: Unarchive Bison
   unarchive: src="{{ ROOT }}/{{ BISON }}-{{ BISON_VERSION }}.tar.gz" dest={{ ROOT }} copy=no
+  when: check_bison_path.stat.exists == false
 
 - name: Build Bison
   shell: 'cd {{ COMPILE_PATH_BISON }};{{ item }}'
@@ -23,12 +44,23 @@
     - './configure --prefix={{ INSTALL_PATH_BISON }}'
     - make
     - make install
+  when: check_bison_path.stat.exists == false
+
+- name: Check if lm_sensors is already installed
+  stat: path={{ ROOT }}/bin/sensors/bin/sensors
+  register: check_sensors_path
+
+- name: Is lm_sensors already installed?
+  debug: msg="Yes, it is! lm_sensors installation will be skipped this time."
+  when: check_sensors_path.stat.exists == true
 
 - name: Download lm_sensors
   get_url: url={{ SENSORS_URL }} dest="{{ ROOT }}/{{ SENSORS }}-{{ SENSORS_VERSION }}.tar.gz" validate_certs=no timeout=30
+  when: check_sensors_path.stat.exists == false
 
 - name: Unarchive lm_sensors
   unarchive: src="{{ ROOT }}/{{ SENSORS }}-{{ SENSORS_VERSION }}.tar.gz" dest={{ ROOT }} copy=no
+  when: check_sensors_path.stat.exists == false
 
 - name: Build lm_sensors
   shell: 'cd {{ COMPILE_PATH_SENSORS }};{{ item }}'
@@ -38,3 +70,4 @@
   with_items:
     - 'make -i PREFIX={{ INSTALL_PATH_SENSORS }} all'
     - 'make -i PREFIX={{ INSTALL_PATH_SENSORS }} install'
+  when: check_sensors_path.stat.exists == false

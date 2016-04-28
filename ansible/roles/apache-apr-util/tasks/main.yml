@@ -1,8 +1,18 @@
+- name: Check if Apache APR Util is already installed
+  stat: path={{ ROOT }}/bin/apr/lib/libaprutil-1.so
+  register: check_aprutil_path
+
+- name: Is Apache APR Util already installed?
+  debug: msg="Yes, it is! Apache APR Util installation will be skipped this time."
+  when: check_aprutil_path.stat.exists == true
+
 - name: Download Apache APR Util
   get_url: url={{ APRUTIL_URL }} dest="{{ ROOT }}/{{ APRUTIL }}-{{ APRUTIL_VERSION }}.tar.gz" validate_certs=no timeout=30
+  when: check_aprutil_path.stat.exists == false
 
 - name: Unarchive Apache APR Util
   unarchive: src="{{ ROOT }}/{{ APRUTIL }}-{{ APRUTIL_VERSION }}.tar.gz" dest={{ ROOT }} copy=no
+  when: check_aprutil_path.stat.exists == false
 
 - name: Build Apache APR Util
   shell: 'cd {{ COMPILE_PATH_APRUTIL }};{{ item }}'
@@ -10,3 +20,4 @@
     - './configure --prefix={{ INSTALL_PATH_APRUTIL }} --with-apr={{ INSTALL_PATH_APR }}'
     - make all
     - make install
+  when: check_aprutil_path.stat.exists == false

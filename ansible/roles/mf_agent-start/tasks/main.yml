@@ -1,2 +1,12 @@
+- name: Check if the monitoring agent is already running
+  shell: ps aux | grep mf_agent
+  register: mf_agent_process
+
+- debug: msg="A monitoring agent is already running, won't start another one!"
+  when: mf_agent_process.stdout_lines|length > 2
+
 - name: Start the monitoring agent
-  shell: '{{ ROOT }}/dist/start.sh'
+  command: "{{ ROOT }}/dist/start.sh -t demo -e 31337"
+  args:
+    chdir: "{{ ROOT }}/dist"
+  when: mf_agent_process.stdout_lines|length <= 2

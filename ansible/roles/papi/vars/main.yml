@@ -1,5 +1,5 @@
 PAPI: papi
-PAPI_VERSION: 5.4.0
+PAPI_VERSION: 5.4.3
 PAPI_URL: "http://icl.cs.utk.edu/projects/papi/downloads/{{ PAPI }}-{{ PAPI_VERSION }}.tar.gz"
 INSTALL_PATH: "{{ ROOT }}/bin"
 INSTALL_PATH_PAPI: "{{ INSTALL_PATH }}/{{ PAPI }}"

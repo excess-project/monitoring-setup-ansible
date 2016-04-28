@@ -1,8 +1,18 @@
+- name: Check if Apache APR is already installed
+  stat: path={{ ROOT }}/bin/apr/lib/libapr-1.so
+  register: check_apache_path
+
+- name: Is Apache APR already installed?
+  debug: msg="Yes, it is! Apache APR installation will be skipped this time."
+  when: check_apache_path.stat.exists == true
+
 - name: Download Apache APR
   get_url: url={{ APR_URL }} dest="{{ ROOT }}/{{ APR }}-{{ APR_VERSION }}.tar.gz" validate_certs=no timeout=30
+  when: check_apache_path.stat.exists == false
 
 - name: Unarchive Apache APR
   unarchive: src="{{ ROOT }}/{{ APR }}-{{ APR_VERSION }}.tar.gz" dest={{ ROOT }} copy=no
+  when: check_apache_path.stat.exists == false
 
 - name: Build Apache APR
   shell: 'cd {{ COMPILE_PATH_APR }};{{ item }}'
@@ -10,3 +20,4 @@
     - './configure --prefix={{ INSTALL_PATH_APR }}'
     - make
     - make install all
+  when: check_apache_path.stat.exists == false

@@ -1,3 +1,11 @@
+- name: Check if monitoring server is already installed
+  stat: path=/home/{{ user }}/monitoring-www/node_modules
+  register: check_frontend_path
+
+- name: Is the monitoring frontend already installed?
+  debug: msg="Yes, it is! Monitoring frontend installation will be skipped this time."
+  when: check_frontend_path.stat.exists == true
+
 - name: Checkout monitoring frontend
   git:
     repo=https://github.com/excess-project/monitoring-frontend.git
@@ -5,9 +13,16 @@
     force=yes
     version=master
   become: no
+  when: check_frontend_path.stat.exists == false
 
 - name: Install monitoring frontend
   npm: path=/home/{{ user }}/monitoring-www
+  when: check_frontend_path.stat.exists == false
+
+- name: "Check list of Node.js apps running."
+  command: forever list
+  register: forever_list
+  changed_when: false
 
 - name: Start the monitoring frontend using forever
   command: forever start /home/{{ user }}/monitoring-www/bin/www

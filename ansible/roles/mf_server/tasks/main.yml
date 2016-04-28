@@ -1,3 +1,11 @@
+- name: Check if monitoring server is already installed
+  stat: path=/home/{{ user }}/monitoring-server/node_modules
+  register: check_server_path
+
+- name: Is the monitoring server already installed?
+  debug: msg="Yes, it is! Monitoring server installation will be skipped this time."
+  when: check_server_path.stat.exists == true
+
 - name: Clones the monitoring-server repository
   git:
     repo=https://github.com/excess-project/monitoring-server.git
@@ -5,11 +13,13 @@
     force=yes
     version=master
   become: no
+  when: check_server_path.stat.exists == false
 
 - name: Install monitoring server
   npm: path=/home/{{ user }}/monitoring-server
   # issue with jade dependencies -> renaming to pug failed
   ignore_errors: yes
+  when: check_server_path.stat.exists == false
 
 - name: "Check list of Node.js apps running."
   command: forever list

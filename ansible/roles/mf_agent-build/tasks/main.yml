@@ -1,5 +1,14 @@
+- name: Check if the monitoring agent is already installed
+  stat: path={{ ROOT }}/dist/bin/mf_agent
+  register: check_dist_path
+
+- name: Is the monitoring agent already installed?
+  debug: msg="Yes, it is! Agent installation will be skipped this time."
+  when: check_dist_path.stat.exists == true
+
 - name: Build monitoring agent
   shell: 'cd {{ ROOT }};{{ item }}'
   with_items:
     - make
     - make install
+  when: check_dist_path.stat.exists == false

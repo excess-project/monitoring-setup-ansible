@@ -29,6 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "node1" do |conf_master|
     # npm requires some memory to install all dependencies
     conf_master.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--nictype1", "virtio"]
       v.memory = 1024
       v.cpus = 2
     end
@@ -45,6 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       conf_worker.vm.network "private_network", ip: opts[:ip]
 
       conf_worker.vm.provider "vbox" do |v|
+        v.customize ["modifyvm", :id, "--nictype1", "virtio"]
         v.memory = opts[:mem]
         v.cpus = opts[:cpus]
       end
