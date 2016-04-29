@@ -44,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   workers.each do |opts|
     config.vm.define opts[:name] do |conf_worker|
       conf_worker.vm.network "private_network", ip: opts[:ip]
-
+      conf_worker.vm.hostname = opts[:name]
       conf_worker.vm.provider "vbox" do |v|
         v.customize ["modifyvm", :id, "--nictype1", "virtio"]
         v.memory = opts[:mem]
