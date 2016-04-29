@@ -6,7 +6,7 @@
   when: mf_agent_process.stdout_lines|length > 2
 
 - name: Start the monitoring agent
-  command: "{{ ROOT }}/dist/start.sh -t demo -e 31337"
+  shell: "{{ ROOT }}/dist/start.sh -t demo -e 31337"
   args:
     chdir: "{{ ROOT }}/dist"
   when: mf_agent_process.stdout_lines|length <= 2
