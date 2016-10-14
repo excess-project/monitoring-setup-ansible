@@ -11,6 +11,8 @@
     - apache-apr-util
     - nvidia-gdk
     - lm-sensors
+    - libiio
+    - queues
     - mf_agent-build
     - clean-up
     - mf_agent-start

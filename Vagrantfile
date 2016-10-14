@@ -29,6 +29,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "node1" do |conf_master|
     # npm requires some memory to install all dependencies
     conf_master.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
       v.customize ["modifyvm", :id, "--nictype1", "virtio"]
       v.memory = 1024
       v.cpus = 2
@@ -46,14 +48,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       conf_worker.vm.network "private_network", ip: opts[:ip]
       conf_worker.vm.hostname = opts[:name]
       conf_worker.vm.provider "vbox" do |v|
+        v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+        v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
         v.customize ["modifyvm", :id, "--nictype1", "virtio"]
         v.memory = opts[:mem]
         v.cpus = opts[:cpus]
       end
-
-      conf_worker.vm.provision "file",
-        source: "config/mf_config.ini",
-        destination: "/home/vagrant/monitoring-agent/dist/mf_config.ini"
     end
   end
 

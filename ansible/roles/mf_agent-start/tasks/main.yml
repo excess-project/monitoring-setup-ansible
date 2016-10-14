@@ -5,8 +5,17 @@
 - debug: msg="A monitoring agent is already running, won't start another one!"
   when: mf_agent_process.stdout_lines|length > 2
 
+- action: uri url=http://192.168.33.10:3000 return_content=yes
+  register: webpage
+
+- fail: msg='host unreachable'
+  when: "'EXCESS' not in webpage.content"
+
+- name: Copy mf_config.ini with correct IP mappings and meminfo switched on
+  copy: src=../config/mf_config.ini dest=/home/vagrant/monitoring-agent/dist/mf_config.ini owner=vagrant group=vagrant mode=644
+
 - name: Start the monitoring agent
-  shell: "{{ ROOT }}/dist/start.sh -t demo -e 31337"
+  command: "{{ ROOT }}/dist/start.sh -t demo -e 31337"
   args:
     chdir: "{{ ROOT }}/dist"
   when: mf_agent_process.stdout_lines|length <= 2

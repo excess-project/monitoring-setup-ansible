@@ -3,4 +3,4 @@
     repo=https://github.com/excess-project/monitoring-agent.git
     dest={{ ROOT }}
     force=yes
-    version=master
+    version=release/16.6.0

@@ -6,6 +6,19 @@
   debug: msg="Yes, it is! Agent installation will be skipped this time."
   when: check_dist_path.stat.exists == true
 
+- name: Installs required dependencies
+  apt:
+    pkg={{ item }}
+    state=present
+    update_cache=no
+    force=yes
+  with_items:
+    - cmake
+    - libxml2-dev
+    - bison
+    - flex
+  become: yes
+
 - name: Build monitoring agent
   shell: 'cd {{ ROOT }};{{ item }}'
   with_items:

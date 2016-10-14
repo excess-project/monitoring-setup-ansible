@@ -131,6 +131,7 @@ Please [create](https://github.com/excess-project/monitoring-setup-ansible/websi
 
 | Date        | Version | Comment                                    |
 | ----------- | ------- | ------------------------------------------ |
+| 2016-10-14  | 16.6    | Updated recipes to support ATOM v16.6      |
 | 2016-04-27  | 16.2    | Public release compatible with ATOM v16.2  |
 
 

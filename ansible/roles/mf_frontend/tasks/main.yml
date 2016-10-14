@@ -11,7 +11,7 @@
     repo=https://github.com/excess-project/monitoring-frontend.git
     dest=/home/{{ user }}/monitoring-www
     force=yes
-    version=master
+    version=release/16.6.0
   become: no
   when: check_frontend_path.stat.exists == false
 

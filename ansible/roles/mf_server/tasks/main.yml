@@ -11,7 +11,7 @@
     repo=https://github.com/excess-project/monitoring-server.git
     dest=/home/{{ user }}/monitoring-server
     force=yes
-    version=master
+    version=release/16.6.1
   become: no
   when: check_server_path.stat.exists == false
 
